@@ -39,6 +39,25 @@ public class JeuDeCartes {
 		}
 		return sb.toString();
 	}
+	
+	public boolean checkCount() {
+		Carte[] cartes = donnerCartes();
+		
+		for (Configuration config : typesDeCartes) {
+			int compte = 0;
+			for (Carte carte : cartes) {
+				if (carte.equals(config.getCarte())) {
+					compte++;
+				}
+			}
+			
+			if (compte != config.getNbExemplaires()) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
 
 	private static class Configuration {
 		private Carte carte;
