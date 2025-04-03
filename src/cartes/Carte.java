@@ -6,5 +6,7 @@ public abstract class Carte {
 	public boolean equals(Object obj) {
 		return obj != null && obj.getClass() == getClass();
 	}
+	
+	// TODO: faire les hashcode
 
 }
