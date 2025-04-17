@@ -20,12 +20,13 @@ public class MainJoueur implements Iterable<Carte>{
 	
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		for (Carte carte : main) {
-			sb.append("\n- ");
-			sb.append(carte.toString());
-		}
-		return sb.toString();
+//		StringBuilder sb = new StringBuilder();
+//		for (Carte carte : main) {
+//			sb.append("\n- ");
+//			sb.append(carte.toString());
+//		}
+//		return sb.toString();
+		return main.toString();
 	}
 
 	@Override

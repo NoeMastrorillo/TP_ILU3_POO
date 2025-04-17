@@ -7,6 +7,9 @@ public abstract class Carte {
 		return obj != null && obj.getClass() == getClass();
 	}
 	
-	// TODO: faire les hashcode
+	@Override
+	public int hashCode() {
+		return 31 * getClass().hashCode();
+	}
 
 }

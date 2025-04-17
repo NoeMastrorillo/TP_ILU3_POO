@@ -2,9 +2,14 @@ package jeu;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import cartes.Bataille;
+import cartes.Botte;
 import cartes.Carte;
+import cartes.DebutLimite;
+import cartes.Limite;
 import utils.GestionCartes;
 
 public class Joueur {
@@ -76,6 +81,35 @@ public class Joueur {
 		}
 		return GestionCartes.extraire(new ArrayList<>(coups));
 	}
+	
+	public String afficherEtatJoueur() {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("Bottes :\n");
+		for (Botte botte : zoneDeJeu.getBottes()) {
+			sb.append("- " + botte.toString());
+		}
+		
+		sb.append("Limitation ? ");
+		List<Limite> pileLimites = zoneDeJeu.getPileLimites();
+		boolean contient = !pileLimites.isEmpty() && pileLimites.get(0) instanceof DebutLimite;
+		sb.append(contient);
+		sb.append("\n");
+		
+		sb.append("Sommet bataille : ");
+		Bataille sommetBataille = null;
+		List<Bataille> pileBatailles = zoneDeJeu.getPileBatailles();
+		if (!pileBatailles.isEmpty()) {
+			sommetBataille = pileBatailles.get(0);
+		}
+		sb.append(sommetBataille);
+		sb.append("\n");
+		
+		sb.append("Contenu de la main :\n");
+		sb.append(main.toString());
+		
+		return sb.toString();
+	}
 
 	public String getNom() {
 		return nom;
@@ -83,6 +117,10 @@ public class Joueur {
 
 	public MainJoueur getMain() {
 		return main;
+	}
+	
+	public ZoneDeJeu getZoneDeJeu() {
+		return zoneDeJeu;
 	}
 
 	@Override

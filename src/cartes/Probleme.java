@@ -15,4 +15,9 @@ public abstract class Probleme extends Carte {
 	public boolean equals(Object obj) {
 		return super.equals(obj) && ((Probleme) obj).getType() == type;
 	}
+	
+	@Override
+	public int hashCode() {
+		return 17 * super.hashCode() * type.hashCode();
+	}
 }

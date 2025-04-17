@@ -40,11 +40,17 @@ public class ZoneDeJeu {
 	}
 	
 	public void deposer(Carte carte) {
-		// TODO : remettre tous les instanceof
+		if (carte instanceof Borne borne) {
+			collectionBornes.add(borne);
+		} else if (carte instanceof Limite limite) {
+			pileLimites.add(0, limite);
+		} else if (carte instanceof Botte botte) {
+			bottes.add(botte);
+		} else if (carte instanceof Bataille bataille) {
+			pileBatailles.add(0, bataille);
+		}
 	}
-	
-//	public void deposer(Carte carte) {}
-//	
+
 //	public void deposer(Borne borne) {
 //		collectionBornes.add(borne);
 //	}
@@ -73,13 +79,17 @@ public class ZoneDeJeu {
 	}
 	
 	public boolean estDepotAutorise(Carte carte) {
-		// TODO: remettre tous les instanceof
-		return false;
+		if (carte instanceof Borne borne) {
+			return estDepotBorneAutorise(borne);
+		} else if (carte instanceof Limite limite) {
+			return estDepotLimiteAutorise(limite);
+		} else if (carte instanceof Bataille bataille){
+			return estDepotBatailleAutorise(bataille);
+		} else {
+			// Botte
+			return true;
+		}
 	}
-	
-//	public boolean estDepotAutorise(Parade parade) {
-//		return parade == Cartes.FEU_VERT && estDepotFeuVertAutorise();
-//	}
 //	
 //	public boolean estDepotAutorise(Carte carte) {
 //		return true;
@@ -117,8 +127,7 @@ public class ZoneDeJeu {
 		}
 
 		Bataille sommet = pileBatailles.get(0);
-		return sommet.equals(Cartes.FEU_ROUGE) || (sommet instanceof Parade && !sommet.equals(Cartes.FEU_VERT))
-				|| (sommet instanceof Attaque && contientBotteDeType(sommet.getType()));
+		return sommet.equals(Cartes.FEU_ROUGE) || !sommet.equals(Cartes.FEU_VERT);
 	}
 
 	private boolean estDepotBorneAutorise(Borne borne) {
@@ -143,11 +152,7 @@ public class ZoneDeJeu {
 		}
 
 		if (bataille.equals(Cartes.FEU_VERT)) {
-			if (pileBatailles.isEmpty())
-				return true;
-
-			Bataille batailleSurPile = pileBatailles.get(0);
-			return batailleSurPile.equals(Cartes.FEU_ROUGE) || !batailleSurPile.equals(Cartes.FEU_VERT);
+			return estDepotFeuVertAutorise();
 		}
 
 		return !pileBatailles.isEmpty() && pileBatailles.get(0).getType() == bataille.getType();
@@ -155,6 +160,22 @@ public class ZoneDeJeu {
 
 	private boolean estPrioritaire() {
 		return bottes.contains(Cartes.PRIORITAIRE);
+	}
+
+	public List<Limite> getPileLimites() {
+		return pileLimites;
+	}
+
+	public List<Bataille> getPileBatailles() {
+		return pileBatailles;
+	}
+
+	public Collection<Borne> getCollectionBornes() {
+		return collectionBornes;
+	}
+
+	public Set<Botte> getBottes() {
+		return bottes;
 	}
 
 }
